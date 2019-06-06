@@ -17,35 +17,32 @@ public class GameScene extends JFrame {
 	private JTextField input;
 	private JLabel[] Word;
 	
-	public static void main(String args[]) {
-		GameScene aaa = new GameScene();
-		aaa.setVisible(true);
-	}
+	
 	
 	public GameScene() {
 		super("JuneSixth GameScene");
 		setSize(500,500);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel StatePanel = new JPanel(new GridLayout(1,5));
-		Level = new JLabel("level");
+		JPanel StatePanel = new JPanel(new GridLayout(1,5));//Panel of (level,score,time)
+		Level = new JLabel("level");//label of stage level
 		blank1 = new JLabel();
-		Score = new JLabel("Score");
+		Score = new JLabel("Score");//label of score
 		blank2 = new JLabel();
-		Time = new JLabel("Time");
+		Time = new JLabel("Time");//label of time right now
 		
 		StatePanel.add(Score);StatePanel.add(blank1);StatePanel.add(Level);StatePanel.add(blank2);StatePanel.add(Time);
 		add(StatePanel,BorderLayout.NORTH);
 		
 		
-		JPanel InputPanel = new JPanel(new FlowLayout());
+		JPanel InputPanel = new JPanel(new FlowLayout());//panel of input text
 		input = new JTextField("",10);
 		InputPanel.add(input);
 		add(InputPanel,BorderLayout.SOUTH);
 		
 		
-		JPanel WordPanel = new JPanel(new GridLayout(5,5));
-		Word = new JLabel[25];
+		JPanel WordPanel = new JPanel(new GridLayout(5,5));//panel of random text
+		Word = new JLabel[25];//array of random text
 		for(int i=0;i<25;i++) {
 			Word[i] = new JLabel("aaa");
 			WordPanel.add(Word[i]);
