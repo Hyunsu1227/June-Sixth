@@ -1,11 +1,11 @@
 import java.awt.BorderLayout;
-
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -35,9 +35,11 @@ public class GameScene extends JFrame implements KeyListener{
 
 	public GameScene() {
 		super("JuneSixth GameScene");
+	
+		setVisible(true);
 		setSize(Menu.WINDOW_WIDTH,Menu.WINDOW_HEIGHT);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		addWindowListener(new CheckOnExit());
+		addWindowListener(new WindowListen());
 		
 		JPanel StatePanel = new JPanel(new GridLayout(1,5));//Panel of (level,score,time)
 		Level = new JLabel("level");//label of stage level
@@ -45,18 +47,21 @@ public class GameScene extends JFrame implements KeyListener{
 		levelfield = new JTextField(NUMBER_OF_CHAR);
 		levelfield.setText(Integer.toString(my_level));
 		levelfield.setEditable(false);
+		
 		JLabel blank1 = new JLabel();
 		Score = new JLabel("Score");//label of score
 		Score.setFont(new Font("Serif", Font.BOLD, 20));
 		scorefield = new JTextField(NUMBER_OF_CHAR);
 		scorefield.setText(Integer.toString(my_score));
 		scorefield.setEditable(false);
+		
 		JLabel blank2 = new JLabel();
 		Time = new JLabel("Time");//label of time right now
 		Time.setFont(new Font("Serif", Font.BOLD, 20));
 		timefield = new JTextField(NUMBER_OF_CHAR);
 		timefield.setText(Integer.toString(my_time));
 		timefield.setEditable(false);
+		
 		StatePanel.add(Score);StatePanel.add(scorefield);StatePanel.add(blank1);
 		StatePanel.add(Level);StatePanel.add(levelfield);StatePanel.add(blank2);
 		StatePanel.add(Time);StatePanel.add(timefield);
@@ -64,6 +69,7 @@ public class GameScene extends JFrame implements KeyListener{
 		
 		JPanel InputPanel = new JPanel(new FlowLayout());//panel of input text
 		input = new JTextField("",10);
+		
 		input.addKeyListener(this);
 		InputPanel.add(input);
 		add(InputPanel,BorderLayout.SOUTH);
@@ -74,14 +80,13 @@ public class GameScene extends JFrame implements KeyListener{
 			Word[i] = new JLabel("aaa");
 			WordPanel.add(Word[i]);
 		}
+
 		Word[20].setText("aab");
 		
 		add(WordPanel,BorderLayout.CENTER);
 		
-		
 		/*JPanel NickName = new JPanel();
 		add(NickName,BorderLayout.CENTER);*/
-		
 	}
 	
 	//get score - when GameOver print score and score to 0
@@ -133,21 +138,95 @@ public class GameScene extends JFrame implements KeyListener{
 		}
 	}
 
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {}
+	
+	public class GameStart extends Thread { // game start
 		
-	}
-
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		public GameStart() {// after 3 second, game start
+			my_time = 3;
+			my_level = 1;
+			my_score = 0;
+			levelfield.setText(Integer.toString(my_level)); //initiate level
+			scorefield.setText(Integer.toString(my_score)); //initiate score
+		}
 		
+		public void run() {
+			while(my_time >= 0) {
+				if(my_time>0) {
+					timefield.setText(Integer.toString(my_time)); // 3,2,1
+				}
+				else {
+					timefield.setText("Start!");
+				}
+				
+				try {
+					Thread.sleep(1000);// 1 second 
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				my_time--;
+			}
+			
+			this.interrupt();// count end
+			GameRun gamerun = new GameRun(); // game run
+			gamerun.start();
+		}
 	}
 	
-	private class CheckOnExit implements WindowListener{
+	private class GameRun extends Thread {// game run
+		private int last_index = 0; // rand_int of last index
+		
+		public GameRun() { // initiate time 60 seconds
+			my_time = 60;
+			rand_int = new int[25]; 
+		}
+		public void run() {
+			int game_speed = 15, cnt =0;
+			while(my_time > 0) {
+				timefield.setText(Integer.toString(my_time)); // show time
+				try {
+					for(int i=0;i<10;i++) {
+						Thread.sleep(100);
+						cnt++;
+						if(game_speed == cnt) { // per 1.5 second create word;
+							System.out.println(random_index());
+							//Word[random_index()].setText(getWord());
+							cnt = 0;
+						}
+					}
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				my_time--;
+			}
+			this.interrupt();// game end
+		}
+		
+		private int random_index() { // create 0~25 random index 
+			int random = (int)(Math.random()*25) + 1;
+			
+			for(int i=0 ; i<last_index ; i++) { // until random is not on rand_int[], run
+				if(rand_int[i] == random) {
+					random = (int)(Math.random()*25);
+					i = 0;
+				}
+			}
+			rand_int[last_index] = random; // random put on rand_int
+			last_index++;
+			
+			return random;
+		}
+	}
+	
+	private class WindowListen implements WindowListener{
 		@Override
 		public void windowOpened(WindowEvent e) {
 			// TODO Auto-generated method stub
-			
+			GameStart gamestart = new GameStart();
+			gamestart.start();
 		}
 
 		@Override
@@ -187,4 +266,5 @@ public class GameScene extends JFrame implements KeyListener{
 			
 		}
 	}
+
 }
