@@ -65,7 +65,7 @@ public class Menu extends JFrame implements ActionListener {
 		if (actionCommand.equals("start")) {
 			GameScene Game = new GameScene();
 			Game.setVisible(true);
-
+			dispose();
 		} 
 		//open record window
 		else if (actionCommand.equals("record")) {
