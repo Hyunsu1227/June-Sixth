@@ -17,10 +17,10 @@ import javax.swing.JTextField;
 public class GameOver extends JFrame implements ActionListener {
 	private boolean over;// state gaming or over
 
-	public static void main(String args[]) {
-		GameOver test = new GameOver();
-		test.setVisible(true);
-	}
+//	public static void main(String args[]) {
+//		GameOver test = new GameOver();
+//		test.setVisible(true);
+//	}
 
 	public GameOver() {
 		super("JuneSixth GameScene");// test area
@@ -44,7 +44,8 @@ public class GameOver extends JFrame implements ActionListener {
 		 * catch (FileNotFoundException e) { // TODO Auto-generated catch block
 		 * e.printStackTrace(); } ddd=dd.next();
 		 */
-		ScoreText.setText("   max record : ???  " + " my record : ???");
+		ScoreText.setText("   max record : ???  " + " my record : "+Integer.toString(GameScene.getscore())+"  ");
+		GameScene.setscore();//score set 0
 		ScoreText.setFont(new Font("Serif", Font.PLAIN, 30));
 		ScoreText.setBackground(Color.orange);
 		OptionPanel.add(ScoreText);
