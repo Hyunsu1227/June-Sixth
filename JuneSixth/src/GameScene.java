@@ -8,6 +8,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,7 +33,7 @@ public class GameScene extends JFrame implements KeyListener{
 	private JTextField input;
 	
 	private JLabel[] Word;
-	private int[] rand_int;	//random number save
+	private ArrayList<Integer> rand_int;	
 
 	public GameScene() {
 		super("JuneSixth GameScene");
@@ -120,19 +122,13 @@ public class GameScene extends JFrame implements KeyListener{
 					levelfield.setText(Integer.toString(my_level));
 					timefield.setText(Integer.toString(my_time));
 					
+					
 					return;
 				}
 			}
 			if(i==25) {
 				//if no text, given time penalty
 				my_time-=1;
-				//game over
-				if(my_time==0) {
-					GameOver gui = new GameOver(my_score);
-					//gui.setEndScore(my_score);//send my score to GameOver class// why no change???
-					gui.setVisible(true);
-					dispose();
-				}
 				timefield.setText(Integer.toString(my_time));
 			}
 		}
@@ -176,21 +172,25 @@ public class GameScene extends JFrame implements KeyListener{
 	}
 	
 	private class GameRun extends Thread {// game run
-		private int last_index = 0; // rand_int of last index
 		
 		public GameRun() { // initiate time 60 seconds
 			my_time = 60;
-			rand_int = new int[25]; 
+			rand_int = new ArrayList<Integer>();
 		}
 		public void run() {
 			int game_speed = 15, cnt =0;
-			while(my_time > 0) {
+			while(my_time >= 0) {
 				timefield.setText(Integer.toString(my_time)); // show time
 				try {
 					for(int i=0;i<10;i++) {
 						Thread.sleep(100);
 						cnt++;
 						if(game_speed == cnt) { // per 1.5 second create word;
+							if(rand_int.size() == 25) { //if label is full of word, the game is end
+								GameOver gui = new GameOver(my_score);
+								gui.setVisible(true);
+								dispose();
+							}
 							System.out.println(random_index());
 							//Word[random_index()].setText(getWord());
 							cnt = 0;
@@ -200,6 +200,13 @@ public class GameScene extends JFrame implements KeyListener{
 				catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				//game over
+				if(my_time<=0) {
+					GameOver gui = new GameOver(my_score);
+					//gui.setEndScore(my_score);//send my score to GameOver class// why no change???
+					gui.setVisible(true);
+					dispose();
+				}
 				my_time--;
 			}
 			this.interrupt();// game end
@@ -207,15 +214,15 @@ public class GameScene extends JFrame implements KeyListener{
 		
 		private int random_index() { // create 0~25 random index 
 			int random = (int)(Math.random()*25) + 1;
+			Iterator<Integer> rand = rand_int.iterator();
 			
-			for(int i=0 ; i<last_index ; i++) { // until random is not on rand_int[], run
-				if(rand_int[i] == random) {
+			while(rand.hasNext()) {
+				if(rand.next() == random) {
 					random = (int)(Math.random()*25);
-					i = 0;
+					rand = rand_int.iterator();
 				}
 			}
-			rand_int[last_index] = random; // random put on rand_int
-			last_index++;
+			rand_int.add(random); // add random on rand_int
 			
 			return random;
 		}
