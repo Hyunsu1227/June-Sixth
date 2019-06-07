@@ -44,7 +44,12 @@ public class GameOver extends JFrame implements ActionListener {
 		 * catch (FileNotFoundException e) { // TODO Auto-generated catch block
 		 * e.printStackTrace(); } ddd=dd.next();
 		 */
-		ScoreText.setText("   max record : ???  " + " my record : "+SCORE+"  ");
+		Record BeforePlay = new Record();
+		if(BeforePlay.record[9]<SCORE) {//get max record // replace record.txt=>fail...
+			BeforePlay.record[9]=SCORE;
+			BeforePlay.sorting(BeforePlay.record);
+		}
+		ScoreText.setText("   max record :  "+BeforePlay.record[0] + " my record : "+SCORE+"  ");
 		//GameScene.setscore();//score set 0
 		ScoreText.setFont(new Font("Serif", Font.PLAIN, 30));
 		ScoreText.setBackground(Color.orange);
