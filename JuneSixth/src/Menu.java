@@ -12,7 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class Menu extends JFrame implements ActionListener {
-
+	
+	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_HEIGHT = 400;
 	private JButton start;
 	private JButton exit;
 	private JButton showRec;
@@ -23,7 +25,7 @@ public class Menu extends JFrame implements ActionListener {
 		super();
 		setTitle("JuneSixth");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(800, 400);
+		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setLayout(new BorderLayout());
 
 		JTextField Title = new JTextField("Very good enjoy JuneSixth");//ingame title
