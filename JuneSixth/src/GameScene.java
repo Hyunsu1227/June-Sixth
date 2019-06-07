@@ -25,11 +25,11 @@ public class GameScene extends JFrame implements KeyListener{
 	
 	private JLabel Score;
 	private JTextField scorefield;
-	private static int my_score;
+	private int my_score;
 
 	private JLabel Time;
 	private JTextField timefield;
-	private int my_time=5;//time class value
+	private int my_time;//time class value
 	private JTextField input;
 	
 	private JLabel[] Word;
@@ -92,11 +92,11 @@ public class GameScene extends JFrame implements KeyListener{
 	}
 	
 	//get score - when GameOver print score and score to 0
-	public static int getscore() {
+	public int getscore() {
 		return my_score;
 	}
 	
-	public static void setscore() {
+	public void setscore() {
 		my_score = 0;
 	}
 	
@@ -110,25 +110,25 @@ public class GameScene extends JFrame implements KeyListener{
 				if(Word[i].isShowing() && input.getText().equals(Word[i].getText())){
 					Word[i].setVisible(false); 
 					Word[i].setText("");
-					
+					input.setText("");
 					//score, level update
 					my_score +=10; //score+10
 					if(my_level != my_score/100+1) { // level+1 per score 100
 						my_level = my_score/100+1;
 						//level up!
-						my_time+=1;
+						my_time+=10;
 					}
 					scorefield.setText(Integer.toString(my_score));
 					levelfield.setText(Integer.toString(my_level));
 					timefield.setText(Integer.toString(my_time));
 					
-					
-					return;
+					break;
 				}
 			}
 			if(i==25) {
+				input.setText("");
 				//if no text, given time penalty
-				my_time-=1;
+				my_time-=10;
 				timefield.setText(Integer.toString(my_time));
 			}
 		}
@@ -150,6 +150,7 @@ public class GameScene extends JFrame implements KeyListener{
 		public void run() {
 			while(my_time >= 0) {
 				if(my_time>0) {
+					input.setEditable(false);//can't input 3,2,1
 					timefield.setText(Integer.toString(my_time)); // 3,2,1
 				}
 				else {
@@ -176,6 +177,7 @@ public class GameScene extends JFrame implements KeyListener{
 		public GameRun() { // initiate time 60 seconds
 			my_time = 60;
 			rand_int = new ArrayList<Integer>();
+			input.setEditable(true);
 		}
 		public void run() {
 			int game_speed = 15, cnt =0;
