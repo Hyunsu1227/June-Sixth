@@ -8,7 +8,7 @@ public class Record extends JFrame {
 	public static final int WEIGHT = 200;
 	public static final int RECORD_NUM = 10;
 	int[] record = new int[10]; // read 10 record
-	int[] test = new int[10];// test File I/O
+	
 	
 	//for 구문 전용
 	public int i=0;
@@ -38,21 +38,30 @@ public class Record extends JFrame {
 				System.exit(0);
 			}
 		
-		
 		//sorting
-		int temp;
-		for(i= 1;i<RECORD_NUM;i++)
-		{
-			for(j = 0;j<i;j++)
-			{
-				if(record[i]>record[j])
-				{
-					temp = record[i];
-					record[i] = record[j];
-					record[j] = temp;
-				}
-			}
-		}
+		sorting(record);
+		
+		//정렬된 record를 새로 저장
+		PrintWriter outputStream = null;
+        try
+        {
+            outputStream = new PrintWriter(new FileOutputStream("record.txt",false));
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("i can't find the file 'record.txt'");
+            System.exit(0);
+        }
+        	//새로 입력
+        for(i=0;i<RECORD_NUM;i++)
+        {
+        	outputStream.println(record[i]);
+        }
+
+        outputStream.close( );
+		
+		
+		
 		// title of record
 		JLabel TextLabel = new JLabel("      RECORD");
 		TextLabel.setFont(new Font("Serif", Font.BOLD, 19));
@@ -67,5 +76,23 @@ public class Record extends JFrame {
 		for ( i = 0; i < scoreL.length; i++)
 			RecordPanel.add(scoreL[i]);
 		add(RecordPanel, BorderLayout.CENTER);
+	}
+	
+	//Sorting Method
+	public void sorting(int arr[])
+	{
+		int temp;
+		for(i= 1;i<RECORD_NUM;i++)
+		{
+			for(j = 0;j<i;j++)
+			{
+				if(arr[i]>arr[j])
+				{
+					temp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = temp;
+				}
+			}
+		}
 	}
 }
