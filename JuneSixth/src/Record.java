@@ -9,7 +9,10 @@ public class Record extends JFrame {
 	public static final int RECORD_NUM = 10;
 	int[] record = new int[10]; // read 10 record
 	int[] test = new int[10];// test File I/O
-
+	
+	//for 구문 전용
+	public int i=0;
+	public int j = 0;
 	public Record() {
 		super("Record");
 		setSize(WIDTH, WEIGHT);
@@ -17,33 +20,51 @@ public class Record extends JFrame {
 		setLayout(new BorderLayout());
 		// read record file
 		try {
-			ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("record"));
-			for (int i = 0; i < test.length; i++)
-				test[i] = i;
-			outputStream.writeObject(test);
-			outputStream.close();
-			ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("record"));
-			record = (int[]) inputStream.readObject();
-
-			inputStream.close();
-		} catch (FileNotFoundException e) {
-			System.exit(0);
-		} catch (ClassNotFoundException e) {
-			System.exit(0);
-		} catch (IOException e) {
-			System.exit(0);
+					Scanner Reading = new Scanner(new FileInputStream("record.txt"));
+			
+			for(i = 0;i<10;i++)
+			{
+				
+				record[i] = Reading.nextInt();
+			}
+			
+			Reading.close();
+		} catch (FileNotFoundException e) 
+			{
+				System.exit(0);
+			} 
+		catch (IOException e) 
+			{
+				System.exit(0);
+			}
+		
+		
+		//sorting
+		int temp;
+		for(i= 1;i<RECORD_NUM;i++)
+		{
+			for(j = 0;j<i;j++)
+			{
+				if(record[i]>record[j])
+				{
+					temp = record[i];
+					record[i] = record[j];
+					record[j] = temp;
+				}
+			}
 		}
 		// title of record
 		JLabel TextLabel = new JLabel("      RECORD");
 		TextLabel.setFont(new Font("Serif", Font.BOLD, 19));
 		add(TextLabel, BorderLayout.NORTH);
+		
 		// print record
 		JPanel RecordPanel = new JPanel();
 		RecordPanel.setLayout(new GridLayout(RECORD_NUM / 2, 2));
 		JLabel[] scoreL = new JLabel[RECORD_NUM];
-		for (int i = 0; i < scoreL.length; i++)
-			scoreL[i] = new JLabel(Integer.toString(record[i]));
-		for (int i = 0; i < scoreL.length; i++)
+		for ( i = 0; i < scoreL.length; i++)
+			scoreL[i] = new JLabel(Integer.toString(i+1)+". "+Integer.toString(record[i]));
+		for ( i = 0; i < scoreL.length; i++)
 			RecordPanel.add(scoreL[i]);
 		add(RecordPanel, BorderLayout.CENTER);
 	}
