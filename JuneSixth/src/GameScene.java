@@ -123,7 +123,8 @@ public class GameScene extends JFrame implements KeyListener{
 				my_time-=1;
 				//game over
 				if(my_time==0) {
-					GameOver gui = new GameOver();
+					GameOver gui = new GameOver(my_score);
+					//gui.setEndScore(my_score);//send my score to GameOver class// why no change???
 					gui.setVisible(true);
 					dispose();
 				}

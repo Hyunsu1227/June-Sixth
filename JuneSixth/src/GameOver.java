@@ -16,13 +16,13 @@ import javax.swing.JTextField;
 
 public class GameOver extends JFrame implements ActionListener {
 	private boolean over;// state gaming or over
-
+	private int EndScore;
 //	public static void main(String args[]) {
 //		GameOver test = new GameOver();
 //		test.setVisible(true);
 //	}
 
-	public GameOver() {
+	public GameOver(int SCORE) {
 		super("JuneSixth GameScene");// test area
 		setSize(500, 500);
 
@@ -44,8 +44,8 @@ public class GameOver extends JFrame implements ActionListener {
 		 * catch (FileNotFoundException e) { // TODO Auto-generated catch block
 		 * e.printStackTrace(); } ddd=dd.next();
 		 */
-		ScoreText.setText("   max record : ???  " + " my record : "+Integer.toString(GameScene.getscore())+"  ");
-		GameScene.setscore();//score set 0
+		ScoreText.setText("   max record : ???  " + " my record : "+SCORE+"  ");
+		//GameScene.setscore();//score set 0
 		ScoreText.setFont(new Font("Serif", Font.PLAIN, 30));
 		ScoreText.setBackground(Color.orange);
 		OptionPanel.add(ScoreText);
@@ -68,6 +68,9 @@ public class GameOver extends JFrame implements ActionListener {
 
 	public void setOver(boolean other) {
 		over = other;
+	}
+	public void setEndScore(int score) {
+		EndScore=score;
 	}
 
 	@Override
