@@ -40,27 +40,7 @@ public class Record extends JFrame {
 		
 		//sorting
 		sorting(record);
-		
-		//정렬된 record를 새로 저장
-		PrintWriter outputStream = null;
-        try
-        {
-            outputStream = new PrintWriter(new FileOutputStream("record.txt",false));
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("i can't find the file 'record.txt'");
-            System.exit(0);
-        }
-        	//새로 입력
-        for(i=0;i<RECORD_NUM;i++)
-        {
-        	outputStream.println(record[i]);
-        }
-
-        outputStream.close( );
-		
-		
+		//writing();
 		
 		// title of record
 		JLabel TextLabel = new JLabel("      RECORD");
@@ -77,7 +57,7 @@ public class Record extends JFrame {
 			RecordPanel.add(scoreL[i]);
 		add(RecordPanel, BorderLayout.CENTER);
 	}
-	
+		
 	//Sorting Method
 	public void sorting(int arr[])
 	{
@@ -94,5 +74,27 @@ public class Record extends JFrame {
 				}
 			}
 		}
+	}
+	
+	
+	public void writing()
+	{
+		PrintWriter outputStream = null;
+        try
+        {
+            outputStream = new PrintWriter(new FileOutputStream("src/record.txt",false));
+        }
+        catch(FileNotFoundException e)
+        {
+            System.out.println("i can't find the file 'record.txt'");
+            System.exit(0);
+        }
+        	//새로 입력
+        for(i=0;i<RECORD_NUM;i++)
+        {
+        	outputStream.println(record[i]);
+        }
+
+        outputStream.close( );
 	}
 }
