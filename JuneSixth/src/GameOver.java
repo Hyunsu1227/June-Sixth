@@ -39,15 +39,12 @@ public class GameOver extends JFrame implements ActionListener {
 
 		JTextField ScoreText = new JTextField();// show my score and max score
 		String MaxScore = "no score";
-		/*
-		 * Scanner dd; try { dd = new Scanner(new FileInputStream("src/record.txt")); }
-		 * catch (FileNotFoundException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } ddd=dd.next();
-		 */
+	
 		Record BeforePlay = new Record();
-		if(BeforePlay.record[9]<SCORE) {//get max record // replace record.txt=>fail...
+		if(BeforePlay.record[9]<SCORE) {//get max record 
 			BeforePlay.record[9]=SCORE;
 			BeforePlay.sorting(BeforePlay.record);
+			BeforePlay.writing();// replace record.txt
 		}
 		ScoreText.setText("   max record :  "+BeforePlay.record[0] + " my record : "+SCORE+"  ");
 		//GameScene.setscore();//score set 0
