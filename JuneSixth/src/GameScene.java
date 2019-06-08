@@ -33,8 +33,11 @@ public class GameScene extends JFrame implements KeyListener{
 	private JTextField input;
 	
 	private JLabel[] Word;
-	private ArrayList<Integer> rand_int;	
-
+	private ArrayList<Integer> rand_int = new ArrayList<Integer>();	
+	private Iterator<Integer> rand = rand_int.iterator();
+	private StrArr arr = new StrArr();
+	
+	
 	public GameScene() {
 		super("JuneSixth GameScene");
 	
@@ -79,11 +82,9 @@ public class GameScene extends JFrame implements KeyListener{
 		JPanel WordPanel = new JPanel(new GridLayout(5,5));//panel of random text
 		Word = new JLabel[25];//array of random text
 		for(int i=0;i<25;i++) {
-			Word[i] = new JLabel("aaa");
+			Word[i] = new JLabel("");
 			WordPanel.add(Word[i]);
 		}
-
-		Word[20].setText("aab");
 		
 		add(WordPanel,BorderLayout.CENTER);
 		
@@ -108,7 +109,6 @@ public class GameScene extends JFrame implements KeyListener{
 			int i;
 			for(i =0; i<25; i++) {
 				if(Word[i].isShowing() && input.getText().equals(Word[i].getText())){
-					Word[i].setVisible(false); 
 					Word[i].setText("");
 					input.setText("");
 					//score, level update
@@ -118,6 +118,14 @@ public class GameScene extends JFrame implements KeyListener{
 						//level up!
 						my_time+=10;
 					}
+					
+					rand = rand_int.iterator();
+					while(rand.hasNext()) {
+						if(rand.next() == i) {
+							rand.remove();
+						}
+					}
+					
 					scorefield.setText(Integer.toString(my_score));
 					levelfield.setText(Integer.toString(my_level));
 					timefield.setText(Integer.toString(my_time));
@@ -187,38 +195,40 @@ public class GameScene extends JFrame implements KeyListener{
 					for(int i=0;i<10;i++) {
 						Thread.sleep(100);
 						cnt++;
+						
 						if(game_speed == cnt) { // per 1.5 second create word;
+							
 							if(rand_int.size() == 25) { //if label is full of word, the game is end
-								GameOver gui = new GameOver(my_score);
-								gui.setVisible(true);
-								dispose();
+								my_time = 0;
+								break;
 							}
-							System.out.println(random_index());
-							//Word[random_index()].setText(getWord());
+							int temp = random_index();
+							System.out.println(temp);
+							Word[temp].setText(arr.GetWord());
 							cnt = 0;
 						}
+						
 					}
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				//game over
-				if(my_time<=0) {
-					GameOver gui = new GameOver(my_score);
-					//gui.setEndScore(my_score);//send my score to GameOver class// why no change???
-					gui.setVisible(true);
-					dispose();
-				}
+				
 				my_time--;
 			}
+			//game over
+			GameOver gui = new GameOver(my_score);
+			//gui.setEndScore(my_score);//send my score to GameOver class// why no change???
+			gui.setVisible(true);
+			dispose();
 			this.interrupt();// game end
 		}
 		
 		private int random_index() { // create 0~25 random index 
-			int random = (int)(Math.random()*25) + 1;
-			Iterator<Integer> rand = rand_int.iterator();
+			int random = (int)(Math.random()*25);
+			rand = rand_int.iterator();
 			
-			while(rand.hasNext()) {
+			while(rand.hasNext() && rand_int.size() <= 24) {
 				if(rand.next() == random) {
 					random = (int)(Math.random()*25);
 					rand = rand_int.iterator();
