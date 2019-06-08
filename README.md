@@ -1,4 +1,4 @@
-# Java-Project
+# June-Sixth
 
 [`Hyunsu1227`](https://github.com/Hyunsu1227) 
 [`qkrwoghk15`](https://github.com/qkrwoghk15)
