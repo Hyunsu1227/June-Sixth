@@ -8,14 +8,14 @@ import java.util.Scanner;
 
 public class StrArr {
 
-	public String arr[] = new String[10];
+	public String arr[] = new String[100];
 	int i = 0;
 
 	public StrArr() {
 		try {
 			BufferedReader Reading = new BufferedReader(new FileReader("src/word.txt"));
 
-			for (i = 0; i < 10; i++) {
+			for (i = 0; i < 100; i++) {
 
 				arr[i] = Reading.readLine();
 			}
@@ -32,7 +32,7 @@ public class StrArr {
 
 	public String GetWord() {
 		Random randomNumbers = new Random();
-		int k = randomNumbers.nextInt(10);
+		int k = randomNumbers.nextInt(100);
 
 		return arr[k];
 
