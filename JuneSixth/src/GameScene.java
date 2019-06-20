@@ -106,7 +106,7 @@ public class GameScene extends JFrame implements KeyListener{
 			// input text equals?
 			int i;
 			for(i =0; i<25; i++) {
-				if(Word[i].isShowing() && input.getText().equals(Word[i].getText())){
+				if(Word[i].isShowing() && Word[i].getText()!="" &&input.getText().equals(Word[i].getText())){
 					Word[i].setText("");
 					input.setText("");
 					//score, level update
@@ -114,7 +114,7 @@ public class GameScene extends JFrame implements KeyListener{
 					if(my_level != my_score/100+1) { // level+1 per score 100
 						my_level = my_score/100+1;
 						//level up!
-						my_time+=10;
+						my_time+=20;
 					}
 					
 					rand = rand_int.iterator();
@@ -134,7 +134,7 @@ public class GameScene extends JFrame implements KeyListener{
 			if(i==25) {
 				input.setText("");
 				//if no text, given time penalty
-				my_time-=10;
+				my_time-=5;
 				timefield.setText(Integer.toString(my_time));
 			}
 		}
