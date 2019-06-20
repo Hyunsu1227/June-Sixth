@@ -88,8 +88,6 @@ public class GameScene extends JFrame implements KeyListener{
 		
 		add(WordPanel,BorderLayout.CENTER);
 		
-		/*JPanel NickName = new JPanel();
-		add(NickName,BorderLayout.CENTER);*/
 	}
 	
 	//get score - when GameOver print score and score to 0
@@ -203,7 +201,6 @@ public class GameScene extends JFrame implements KeyListener{
 								break;
 							}
 							int temp = random_index();
-							System.out.println(temp);
 							Word[temp].setText(arr.GetWord());
 							cnt = 0;
 						}

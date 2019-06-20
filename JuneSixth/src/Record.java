@@ -22,7 +22,6 @@ public class Record extends JFrame {
 			Scanner Reading = new Scanner(new FileInputStream("src/record.txt"));
 
 			for (i = 0; i < 10; i++) {
-
 				record[i] = Reading.nextInt();
 			}
 
@@ -77,7 +76,6 @@ public class Record extends JFrame {
 		for (i = 0; i < RECORD_NUM; i++) {
 			outputStream.println(record[i]);
 		}
-
 		outputStream.close();
 	}
 }

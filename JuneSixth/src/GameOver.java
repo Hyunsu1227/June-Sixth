@@ -17,10 +17,6 @@ import javax.swing.JTextField;
 public class GameOver extends JFrame implements ActionListener {
 	private boolean over;// state gaming or over
 	private int EndScore;
-//	public static void main(String args[]) {
-//		GameOver test = new GameOver();
-//		test.setVisible(true);
-//	}
 
 	public GameOver(int SCORE) {
 		super("JuneSixth GameScene");// test area
@@ -39,15 +35,15 @@ public class GameOver extends JFrame implements ActionListener {
 
 		JTextField ScoreText = new JTextField();// show my score and max score
 		String MaxScore = "no score";
-	
+
 		Record BeforePlay = new Record();
-		if(BeforePlay.record[9]<SCORE) {//get max record 
-			BeforePlay.record[9]=SCORE;
+		if (BeforePlay.record[9] < SCORE) {// get max record
+			BeforePlay.record[9] = SCORE;
 			BeforePlay.sorting(BeforePlay.record);
 			BeforePlay.writing();// replace record.txt
 		}
-		ScoreText.setText("   max record :  "+BeforePlay.record[0] + " my record : "+SCORE+"  ");
-		//GameScene.setscore();//score set 0
+		ScoreText.setText("   max record :  " + BeforePlay.record[0] + " my record : " + SCORE + "  ");
+		// GameScene.setscore();//score set 0
 		ScoreText.setFont(new Font("Serif", Font.PLAIN, 30));
 		ScoreText.setBackground(Color.orange);
 		OptionPanel.add(ScoreText);
@@ -71,8 +67,9 @@ public class GameOver extends JFrame implements ActionListener {
 	public void setOver(boolean other) {
 		over = other;
 	}
+
 	public void setEndScore(int score) {
-		EndScore=score;
+		EndScore = score;
 	}
 
 	@Override

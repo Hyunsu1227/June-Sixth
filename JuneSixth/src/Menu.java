@@ -28,8 +28,8 @@ public class Menu extends JFrame implements ActionListener {
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		setLayout(new BorderLayout());
 
-		JTextField Title = new JTextField("Very good enjoy JuneSixth");//ingame title
-		Title.setFont(new Font("Serif", Font.PLAIN, 80));
+		JTextField Title = new JTextField("  Enjoy JuneSixth");//ingame title
+		Title.setFont(new Font("Serif", Font.PLAIN, 100));
 		Title.setEditable(false);
 		Title.setBackground(Color.white);
 
