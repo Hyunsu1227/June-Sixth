@@ -36,7 +36,7 @@ public class GameScene extends JFrame implements KeyListener{
 	private ArrayList<Integer> rand_int = new ArrayList<Integer>();	
 	private Iterator<Integer> rand = rand_int.iterator();
 	private StrArr arr = new StrArr();
-	
+	private int game_speed;
 	
 	public GameScene() {
 		super("JuneSixth GameScene");
@@ -115,6 +115,7 @@ public class GameScene extends JFrame implements KeyListener{
 						my_level = my_score/100+1;
 						//level up!
 						my_time+=20;
+						game_speed--;
 					}
 					
 					rand = rand_int.iterator();
@@ -184,9 +185,10 @@ public class GameScene extends JFrame implements KeyListener{
 			my_time = 60;
 			rand_int = new ArrayList<Integer>();
 			input.setEditable(true);
+			game_speed = 15;
 		}
 		public void run() {
-			int game_speed = 15, cnt =0;
+			int cnt =0;
 			while(my_time >= 0) {
 				timefield.setText(Integer.toString(my_time)); // show time
 				try {
